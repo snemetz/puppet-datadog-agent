@@ -33,28 +33,28 @@ class datadog(
   $dd_url  = $datadog::params::dd_url
 
   case $operatingsystem {
-    "Ubuntu","Debian": { include datadog::ubuntu }
-    "RedHat","CentOS","Fedora","Amazon": { include datadog::redhat }
+    'Ubuntu','Debian': { include datadog::ubuntu }
+    'RedHat','CentOS','Fedora','Amazon': { include datadog::redhat }
     default: { notify{'Unsupported OS': message => 'The DataDog module only support Red Hat and Ubuntu derivatives'} }
   }
 
-  file { "/etc/dd-agent":
+  file { '/etc/dd-agent':
     ensure   => present,
-    owner    => "root",
-    group    => "root",
-    mode     => 0755,
-    require  => Package["datadog-agent"],
+    owner    => 'root',
+    group    => 'root',
+    mode     => '0755',
+    require  => Package['datadog-agent'],
   }
 
   # main agent config file
-  file { "/etc/dd-agent/datadog.conf":
+  file { '/etc/dd-agent/datadog.conf':
     ensure   => file,
-    content  => template("datadog/datadog.conf.erb"),
-    owner    => "dd-agent",
-    group    => "root",
+    content  => template('datadog/datadog.conf.erb'),
+    owner    => 'dd-agent',
+    group    => 'root',
     mode     => 0640,
-    notify   => Service["datadog-agent"],
-    require  => File["/etc/dd-agent"],
+    notify   => Service['datadog-agent'],
+    require  => File['/etc/dd-agent'],
   }
 
   if $puppet_run_reports {

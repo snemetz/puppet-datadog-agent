@@ -29,5 +29,5 @@ class datadog::params {
     }
     default: { notify{'Unsupported OS': message => 'The DataDog module only support Red Hat and Ubuntu derivatives'} }
   }
-    
+
 }

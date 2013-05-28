@@ -24,12 +24,12 @@ class datadog::redhat {
       require => Yumrepo['datadog'],
     }
 
-    service { "datadog-agent":
+    service { 'datadog-agent':
       ensure    => running,
       enable    => true,
       hasstatus => false,
       pattern   => 'dd-agent',
-      require   => Package["datadog-agent"],
+      require   => Package['datadog-agent'],
     }
 
 }
