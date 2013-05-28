@@ -48,9 +48,9 @@ class datadog::reports(
   file { '/etc/dd-agent/datadog.yaml':
     ensure   => file,
     content  => template('datadog/datadog.yaml.erb'),
-    owner    => $puppetmaster_user,
+    owner    => 'dd-agent', # $puppetmaster_user,
     group    => 'root',
-    mode     => '0640',
+    mode     => '0644',
     require  => File['/etc/dd-agent'],
   }
 
