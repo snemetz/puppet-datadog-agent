@@ -17,6 +17,7 @@ class datadog::redhat {
       gpgcheck  => 0,
       descr     => 'Datadog, Inc.',
       baseurl   => 'http://apt.datadoghq.com/rpm/',
+      priority  => 1,
     }
 
     package { 'datadog-agent':
