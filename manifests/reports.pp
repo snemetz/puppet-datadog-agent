@@ -22,6 +22,7 @@ class datadog::reports(
   $rubygems_package = $datadog::params::rubygems_package
   $rubydev_package =$datadog::params::rubydev_package
 
+  if ! str2bool($::is_pe) {
   # check to make sure that you're not installing rubygems somewhere else,
   # and install it if it's not defined elsewhere in your puppet catalog
   if defined(Package[$rubygems_package]) {
@@ -44,7 +45,11 @@ class datadog::reports(
       before => Package['dogapi'],
     }
   }
-
+  package{'dogapi':
+    ensure    => 'installed',
+    provider  => 'gem',
+  }
+  }
   file { '/etc/dd-agent/datadog.yaml':
     ensure   => file,
     content  => template('datadog/datadog.yaml.erb'),
@@ -52,11 +57,6 @@ class datadog::reports(
     group    => 'root',
     mode     => '0644',
     require  => File['/etc/dd-agent'],
-  }
-
-  package{'dogapi':
-    ensure    => 'installed',
-    provider  => 'gem',
   }
 
 }
